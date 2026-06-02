@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>민아영 Min Ayeong | Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* Global Reset & Variables */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    :root {
+      --bg-color: #0a0a0a;
+      --text-color: #e8e8e0;
+      --point-color: #c8b89a; /* 웜 골드 */
+      --muted-color: #888888;
+      --card-bg: #111111;
+      --border-style: 0.5px solid rgba(255, 255, 255, 0.08);
+      --font-family: system-ui, -apple-system, 'Helvetica Neue', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: var(--font-family);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      overflow-x: hidden;
+    }
+
+    /* 언어 토글 메커니즘 */
+    .lang-ko .en { display: none !important; }
+    .lang-en .ko { display: none !important; }
+
+    /* 레이아웃 컨테이너 */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+      transition: color 0.2s ease, border-color 0.2s ease;
+    }
+
+    /* Navigation Header */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 2rem 1.5rem;
+      z-index: 1000;
+      background: linear-gradient(to bottom, rgba(10,10,10,0.85) 0%, rgba(10,10,10,0) 100%);
+      pointer-events: none;
+    }
+
+    header * {
+      pointer-events: auto;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .nav-item {
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      color: var(--muted-color);
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    .nav-item.active, .nav-item:hover {
+      color: var(--point-color);
+    }
+
+    #lang-btn {
+      background: var(--card-bg);
+      border: var(--border-style);
+      color: var(--text-color);
+      padding: 0.5rem 1rem;
+      font-size: 0.8rem;
+      cursor: pointer;
+      border-radius: 2px;
+      letter-spacing: 0.05em;
+      transition: all 0.2s ease;
+    }
+
+    #lang-btn:hover {
+      border-color: var(--point-color);
+      color: var(--point-color);
+    }
+
+    /* Sections Common */
+    section {
+      padding: 5rem 0;
+      border-bottom: var(--border-style);
+    }
+
+    section:last-of-type {
+      border-bottom: none;
+    }
+
+    .section-title {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--point-color);
+      margin-bottom: 3.5rem;
+      font-weight: 500;
+    }
+
+    /* Hero Section */
+    #hero {
+      height: 100vh;
+      display: flex;
+      align-items: flex-end;
+      padding-bottom: 12vh;
+    }
+
+    .hero-content {
+      width: 100%;
+    }
+
+    .hero-name {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 300;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-sub {
+      font-size: clamp(1rem, 2.5vw, 1.2rem);
+      color: var(--muted-color);
+      font-weight: 300;
+      margin-bottom: 2.5rem;
+      line-height: 1.5;
+    }
+
+    .hero-contact {
+      font-size: 0.9rem;
+      color: var(--point-color);
+      letter-spacing: 0.05em;
+      line-height: 1.6;
+    }
+
+    /* Films Section */
+    .film-item {
+      margin-bottom: 5rem;
+      padding-bottom: 5rem;
+      border-bottom: rgba(255,255,255,0.04) 1px solid;
+    }
+
+    .film-item:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    .film-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3.5rem;
+    }
+
+    .film-title {
+      font-size: 1.4rem;
+      font-weight: 400;
+      margin-bottom: 1rem;
+      line-height: 1.35;
+    }
+
+    .film-meta {
+      font-size: 0.85rem;
+      color: var(--muted-color);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    .film-synopsis {
+      font-size: 0.95rem;
+      line-height: 1.75;
+      color: #d1d1c9;
+      margin-bottom: 1.5rem;
+      text-align: justify;
+    }
+
+    .film-laurels h4 {
+      font-size: 0.8rem;
+      color: var(--point-color);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.6rem;
+      font-weight: 500;
+    }
+
+    .film-laurels ul {
+      list-style: none;
+      font-size: 0.85rem;
+      color: var(--muted-color);
+      line-height: 1.7;
+    }
+
+    .btn-link {
+      display: inline-flex;
+      align-items: center;
+      background: var(--card-bg);
+      border: var(--border-style);
+      padding: 0.6rem 1.2rem;
+      font-size: 0.8rem;
+      color: var(--text-color);
+      border-radius: 2px;
+      letter-spacing: 0.05em;
+      margin-top: 1rem;
+    }
+
+    .btn-link:hover {
+      border-color: var(--point-color);
+      color: var(--point-color);
+    }
+
+    .btn-link::after {
+      content: " →";
+      margin-left: 0.5rem;
+    }
+
+    /* Works Section (Grid Cards) */
+    .works-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .work-card {
+      background: var(--card-bg);
+      border: var(--border-style);
+      padding: 1.75rem;
+      border-radius: 2px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 220px;
+    }
+
+    .work-card:hover {
+      border-color: rgba(200, 184, 154, 0.25);
+    }
+
+    .work-card-top h3 {
+      font-size: 1.05rem;
+      font-weight: 400;
+      line-height: 1.45;
+      margin-bottom: 1.25rem;
+    }
+
+    .work-card-meta {
+      font-size: 0.8rem;
+      color: var(--muted-color);
+      line-height: 1.6;
+    }
+
+    .work-card-meta div {
+      margin-bottom: 0.3rem;
+    }
+
+    .work-card-meta span {
+      color: #c4c4bc;
+    }
+
+    .card-link {
+      display: inline-block;
+      font-size: 0.8rem;
+      color: var(--point-color);
+      margin-top: 1.5rem;
+      align-self: flex-start;
+      border-bottom: 1px solid transparent;
+    }
+    
+    .card-link:hover {
+      border-color: var(--point-color);
+    }
+
+    .no-link {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.15);
+      margin-top: 1.5rem;
+    }
+
+    /* About Section */
+    .about-content {
+      font-size: 1rem;
+      line-height: 1.85;
+      max-width: 750px;
+    }
+
+    .about-content p {
+      margin-bottom: 1.5rem;
+      text-align: justify;
+    }
+
+    .about-contact-info {
+      margin-top: 3.5rem;
+      font-size: 0.9rem;
+      border-top: var(--border-style);
+      padding-top: 2rem;
+      color: var(--muted-color);
+      letter-spacing: 0.02em;
+      line-height: 1.7;
+    }
+
+    /* Footer */
+    footer {
+      padding: 5rem 0;
+      text-align: center;
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.15);
+      letter-spacing: 0.05em;
+    }
+
+    /* 모바일 반응형 가이드 적용 */
+    @media (max-width: 768px) {
+      .film-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+      header {
+        padding: 1.5rem 1rem;
+      }
+      .nav-links {
+        gap: 1.2rem;
+      }
+      section {
+        padding: 4rem 0;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .nav-links {
+        display: none; /* 600px 이하 네비게이션 숨김 가이드 준수 */
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div id="root" class="lang-ko">
+
+  <header>
+    <nav class="nav-links">
+      <a href="#films" class="nav-item"><span class="ko">다큐멘터리</span><span class="en">Films</span></a>
+      <a href="#works" class="nav-item"><span class="ko">영상 작업</span><span class="en">Works</span></a>
+      <a href="#about" class="nav-item"><span class="ko">소개</span><span class="en">About</span></a>
+    </nav>
+    <button id="lang-btn" onclick="toggleLang()">EN</button>
+  </header>
+
+  <div class="container">
+
+    <section id="hero">
+      <div class="hero-content">
+        <h1 class="hero-name">
+          <span class="ko">민아영</span>
+          <span class="en">Min Ayeong</span>
+        </h1>
+        <p class="hero-sub">
+          <span class="ko">다큐멘터리 감독 · 영상 제작</span>
+          <span class="en">Documentary Director · Videographer</span>
+        </p>
+        <div class="hero-contact">
+          <p>dkdud2tp@gmail.com</p>
+          <p>010.6668.3614</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="films">
+      <h2 class="section-title"><span class="ko">다큐멘터리</span><span class="en">Documentary</span></h2>
+
+      <div class="film-item">
+        <div class="film-grid">
+          <div>
+            <h3 class="film-title">
+              <span class="ko">시민 여러분, 반갑습니다</span>
+              <span class="en">Hello, Citizens</span>
+            </h3>
+            <div class="film-meta">
+              2023 | Documentary | 85min | DCP | Color <br>
+              <span class="ko">한글자막, 수어자막</span>
+              <span class="en">Korean & Sign Language Subtitles</span>
+            </div>
+            <a href="https://naver.me/FnMpdigB" target="_blank" rel="noopener" class="btn-link">
+              <span class="ko">트레일러 보기</span><span class="en">Watch Trailer</span>
+            </a>
+          </div>
+          <div>
+            <p class="film-synopsis">
+              <span class="ko">평일 아침 8시, 전국장애인차별철폐연대(전장연)는 서울 지하철 승강장에서 장애인 권리예산을 요구한다. 2021년 12월부터 이어진 출근길 지하철 행동 — 열차를 늦추고, 시민들에게 말을 건네며, 함께 이동하고 교육받고 노동하고 살아갈 권리를 호소하는 이들에게 정부와 언론과 시민이 반응하기 시작한다.</span>
+              <span class="en">Every weekday at 8am, SADD (Solidarity Against Disability Discrimination) takes to the Seoul subway platforms — delaying trains, addressing commuters, demanding that disability rights be funded. Since December 2021, their actions have drawn responses from the government, media, and the public alike.</span>
+            </p>
+            <div class="film-laurels">
+              <h4><span class="ko">수상 및 상영</span><span class="en">Festivals & Awards</span></h4>
+              <ul>
+                <li><span class="ko">제49회 서울독립영화제 상영 (2023)</span><span class="en">Seoul Independent Film Festival (2023)</span></li>
+                <li><span class="ko">제6회 서울여성독립영화제 심사위원상 (2024)</span><span class="en">Seoul Women's Independent Film Festival — Jury Award (2024)</span></li>
+                <li><span class="ko">제25회 제주여성영화제 상영 (2024)</span><span class="en">Jeju Women's Film Festival (2024)</span></li>
+                <li><span class="ko">제15회 광주여성영화제 상영 (2024)</span><span class="en">Gwangju Women's Film Festival (2024)</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="film-item">
+        <div class="film-grid">
+          <div>
+            <h3 class="film-title">
+              <span class="ko">희망의 기록2 — 나를 찾는 시간</span>
+              <span class="en">Record of Hope 2 — Finding Myself</span>
+            </h3>
+            <div class="film-meta">
+              2025 | Documentary | Color
+            </div>
+          </div>
+          <div>
+            <p class="film-synopsis">
+              <span class="ko">집단수용시설을 떠나 지역사회에서 자립생활을 이어가는 이들의 이야기. 시설 바깥에서 스스로를 다시 발견하는 과정을 기록한다.</span>
+              <span class="en">Stories of people who have left institutional facilities to live independently in the community — the slow, ongoing process of rediscovering oneself outside institutional walls.</span>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="film-item">
+        <div class="film-grid">
+          <div>
+            <h3 class="film-title">
+              <span class="ko">파리행 특급 제주도 여행기</span>
+              <span class="en">Express to Paris: A Jeju Journey</span>
+            </h3>
+            <div class="film-meta">
+              2020 | Documentary | 17min | Color <br>
+              <span class="ko">한글자막, 수어자막</span>
+              <span class="en">Korean & Sign Language Subtitles</span>
+            </div>
+          </div>
+          <div>
+            <p class="film-synopsis">
+              <span class="ko">허리를 굽힐 수 없는 건창 씨는 비행기를 타본 적이 없다. 시설을 나와 자립생활을 하는 그가 비행기로 제주도에 가고 싶다. 항공사는 안전을 이유로 좌석 6개 구매와 지정 시간 탑승을 요구한다. 과연 그의 여행기는 어떻게 될까.</span>
+              <span class="en">Geon-chang, who cannot bend his back, has never been on a plane. Since leaving a residential facility to live independently, one of his dreams is to fly to Jeju Island. The airline, citing safety, requires him to purchase six seats and travel only at designated times. A journey in the making.</span>
+            </p>
+            <div class="film-laurels">
+              <h4><span class="ko">상영</span><span class="en">Festivals</span></h4>
+              <ul>
+                <li><span class="ko">제19회 서울장애인인권영화제 기획작 (2021)</span><span class="en">Seoul Disability Human Rights Film Festival — commissioned work (2021)</span></li>
+                <li><span class="ko">제22회 제주국제장애인인권영화제 (2021)</span><span class="en">Jeju International Disability Human Rights Film Festival (2021)</span></li>
+                <li><span class="ko">제12회 서울국제프라이드영화제 (2022)</span><span class="en">Seoul International Pride Film Festival (2022)</span></li>
+                <li><span class="ko">제6회 인천장애인인권영화제 (2025)</span><span class="en">Incheon Disability Human Rights Film Festival (2025)</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="works">
+      <h2 class="section-title"><span class="ko">영상 작업</span><span class="en">Video Works</span></h2>
+      <div class="works-grid">
+
+        <div class="work-card">
+          <div class="work-card-top">
+            <h3>
+              <span class="ko">집단수용시설 피해생존자 영상 구술 기록</span>
+              <span class="en">Oral History — Survivors of Institutional Confinement</span>
+            </h3>
+            <div class="work-card-meta">
+              <div><span class="ko">클라이언트:</span><span class="en">Client:</span> <span>장애와인권 발바닥행동 · 진실화해위원회</span></div>
+              <div><span class="ko">연도:</span><span class="en">Year:</span> <span>2024</span></div>
+              <div><span class="ko">역할:</span><span class="en">Role:</span> <span><span class="ko">인터뷰 기획, 촬영, 편집</span><span class="en">interview planning, production, editing</span></span></div>
+            </div>
+          </div>
+          <a href="https://m.site.naver.com/20yza" target="_blank" rel="noopener" class="card-link"><span class="ko">영상 보기</span><span class="en">Watch Video</span></a>
+        </div>
+
+        <div class="work-card">
+          <div class="work-card-top">
+            <h3>
+              <span class="ko">알기쉬운 유엔 탈시설가이드라인 교육 영상</span>
+              <span class="en">UN Deinstitutionalisation Guidelines — Educational Video</span>
+            </h3>
+            <div class="work-card-meta">
+              <div><span class="ko">클라이언트:</span><span class="en">Client:</span> <span>국가인권위원회 / National Human Rights Commission</span></div>
+              <div><span class="ko">연도:</span><span class="en">Year:</span> <span>2024</span></div>
+              <div><span class="ko">역할:</span><span class="en">Role:</span> <span><span class="ko">기획, 촬영, 편집</span><span class="en">planning, production, editing</span></span></div>
+            </div>
+          </div>
+          <a href="https://m.site.naver.com/20yBe" target="_blank" rel="noopener" class="card-link"><span class="ko">영상 보기</span><span class="en">Watch Video</span></a>
+        </div>
+
+        <div class="work-card">
+          <div class="work-card-top">
+            <h3>
+              <span class="ko">장애인교원 인식개선 "우리 선생님을 소개합니다"</span>
+              <span class="en">Disability Awareness — "Meet Our Teachers"</span>
+            </h3>
+            <div class="work-card-meta">
+              <div><span class="ko">클라이언트:</span><span class="en">Client:</span> <span>교육부 / Ministry of Education</span></div>
+              <div><span class="ko">연도:</span><span class="en">Year:</span> <span>2024–2025</span></div>
+              <div><span class="ko">역할:</span><span class="en">Role:</span> <span><span class="ko">기획, 촬영</span><span class="en">planning, production</span></span></div>
+            </div>
+          </div>
+          <a href="https://m.site.naver.com/20yDY" target="_blank" rel="noopener" class="card-link"><span class="ko">영상 보기</span><span class="en">Watch Video</span></a>
+        </div>
+
+        <div class="work-card">
+          <div class="work-card-top">
+            <h3>
+              <span class="ko">발바닥행동 20주년 기념 영상</span>
+              <span class="en">Balbadak Action — 20th Anniversary</span>
+            </h3>
+            <div class="work-card-meta">
+              <div><span class="ko">클라이언트:</span><span class="en">Client:</span> <span>장애와인권 발바닥행동</span></div>
+              <div><span class="ko">연도:</span><span class="en">Year:</span> <span>2025</span></div>
+              <div><span class="ko">역할:</span><span class="en">Role:</span> <span><span class="ko">기획, 구성, 촬영, 편집</span><span class="en">full production</span></span></div>
+            </div>
+          </div>
+          <a href="https://m.site.naver.com/25Ybf" target="_blank" rel="noopener" class="card-link"><span class="ko">영상 보기</span><span class="en">Watch Video</span></a>
+        </div>
+
+        <div class="work-card">
+          <div class="work-card-top">
+            <h3>
+              <span class="ko">집단수용시설 사건 파일</span>
+              <span class="en">Institutional Confinement — Case Files</span>
+            </h3>
+            <div class="work-card-meta">
+              <div><span class="ko">클라이언트:</span><span class="en">Client:</span> <span>장애와인권 발바닥행동</span></div>
+              <div><span class="ko">연도:</span><span class="en">Year:</span> <span>2023</span></div>
+              <div><span class="ko">역할:</span><span class="en">Role:</span> <span><span class="ko">기획, 촬영, 편집</span><span class="en">planning, production, editing</span></span></div>
+            </div>
+          </div>
+          <a href="https://youtu.be/JzJPUmcKXAc" target="_blank" rel="noopener" class="card-link"><span class="ko">영상 보기</span><span class="en">Watch Video</span></a>
+        </div>
+
+        <div class="work-card">
+          <div class="work-card-top">
+            <h3>
+              <span class="ko">UN CRPD 쉽게 알기 영상</span>
+              <span class="en">Understanding the UN CRPD</span>
+            </h3>
+            <div class="work-card-meta">
+              <div><span class="ko">클라이언트:</span><span class="en">Client:</span> <span>국가인권위원회 / National Human Rights Commission</span></div>
+              <div><span class="ko">연도:</span><span class="en">Year:</span> <span>2023</span></div>
+              <div><span class="ko">역할:</span><span class="en">Role:</span> <span><span class="ko">기획, 촬영, 편집</span><span class="en">planning, production, editing</span></span></div>
+            </div>
+          </div>
+          <span class="no-link">—</span>
+        </div>
+
+        <div class="work-card">
+          <div class="work-card-top">
+            <h3>
+              <span class="ko">증언 — 역사가 된 사람들</span>
+              <span class="en">Testimonies — People Who Became History</span>
+            </h3>
+            <div class="work-card-meta">
+              <div><span class="ko">클라이언트:</span><span class="en">Client:</span> <span>비마이너</span></div>
+              <div><span class="ko">연도:</span><span class="en">Year:</span> <span>2023</span></div>
+              <div><span class="ko">역할:</span><span class="en">Role:</span> <span><span class="ko">기획, 촬영, 편집</span><span class="en">planning, production, editing</span></span></div>
+            </div>
+          </div>
+          <span class="no-link">—</span>
+        </div>
+
+        <div class="work-card">
+          <div class="work-card-top">
+            <h3>
+              <span class="ko">유엔장애인권리협약 NGO 대응단 활동 스케치</span>
+              <span class="en">UN CRPD NGO Response — Activity Sketch</span>
+            </h3>
+            <div class="work-card-meta">
+              <div><span class="ko">클라이언트:</span><span class="en">Client:</span> <span>한국장애포럼 / Korea Disability Forum</span></div>
+              <div><span class="ko">연도:</span><span class="en">Year:</span> <span>2022</span></div>
+              <div><span class="ko">역할:</span><span class="en">Role:</span> <span><span class="ko">구성, 촬영, 편집</span><span class="en">production, editing</span></span></div>
+            </div>
+          </div>
+          <a href="https://youtu.be/8kHISOPV4Xg" target="_blank" rel="noopener" class="card-link"><span class="ko">영상 보기</span><span class="en">Watch Video</span></a>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="about">
+      <h2 class="section-title"><span class="ko">소개</span><span class="en">About</span></h2>
+      <div class="about-content">
+        <div class="ko">
+          <p>다큐멘터리 감독 민아영은 사회적 옹호의 맥락 안에서 약 10년간 영상 작업을 해왔습니다. 인간의 연결, 자율성, 돌봄의 윤리를 주제로 — 특히 시설 바깥으로 나온 사람들의 이야기를 중심으로 — 카메라를 들어왔습니다.</p>
+          <p>장편 다큐멘터리 〈시민 여러분, 반갑습니다〉(2023)로 서울여성독립영화제 심사위원상을 수상했으며, 교육부·국가인권위원회·진실화해위원회 등 공공기관과의 협업 영상도 다수 제작했습니다.</p>
+          <div class="about-contact-info">
+            <p>문의: dkdud2tp@gmail.com · 010.6668.3614</p>
+          </div>
+        </div>
+        <div class="en">
+          <p>Documentary director Min Ayoung has worked in video production for around ten years within social advocacy contexts. Her practice centers on human connection, autonomy, and the ethics of care — with a sustained focus on people who have left institutional settings to live on their own terms.</p>
+          <p>Her feature documentary <em>Hello, Citizens</em> (2023) received the Jury Award at the Seoul Women's Independent Film Festival. She has also produced commissioned works for the Ministry of Education, the National Human Rights Commission of Korea, and the Truth and Reconciliation Commission, among others.</p>
+          <div class="about-contact-info">
+            <p>Contact: dkdud2tp@gmail.com · 010.6668.3614</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <footer>
+    <p>&copy; 2026 Min Ayeong. All rights reserved.</p>
+  </footer>
+
+</div>
+
+<script>
+  // 지정해주신 언어 토글 로직 구현
+  function toggleLang() {
+    const root = document.getElementById('root');
+    const btn = document.getElementById('lang-btn');
+    if (root.classList.contains('lang-ko')) {
+      root.classList.replace('lang-ko', 'lang-en');
+      btn.textContent = '한';
+    } else {
+      root.classList.replace('lang-en', 'lang-ko');
+      btn.textContent = 'EN';
+    }
+  }
+
+  // IntersectionObserver를 이용한 네비게이션 활성 링크 하이라이트
+  document.addEventListener('DOMContentLoaded', () => {
+    const sections = document.querySelectorAll('section');
+    const navItems = document.querySelectorAll('.nav-item');
+
+    const options = {
+      root: null,
+      rootMargin: '-40% 0px -50% 0px', // 화면의 중앙 영역 진입 기준 감지
+      threshold: 0
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.getAttribute('id');
+          navItems.forEach(item => {
+            if (item.getAttribute('href') === `#${id}`) {
+              item.classList.add('active');
+            } else {
+              item.classList.remove('active');
+            }
+          });
+        }
+      });
+    }, options);
+
+    sections.forEach(section => observer.observe(section));
+  });
+</script>
+</body>
+</html>
